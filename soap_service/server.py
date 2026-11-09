@@ -1,7 +1,4 @@
 """Servicio SOAP interno para consultar solicitudes de adopción.
-
-La operación devuelve un tipo complejo definido en el WSDL. Los campos se
-serializan como elementos XML tipados; no se encapsula JSON en una cadena.
 """
 from spyne import (
     Application, ServiceBase, Integer, Unicode, Boolean, ComplexModel, rpc

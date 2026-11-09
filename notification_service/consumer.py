@@ -18,7 +18,6 @@ def consultar_solicitud_soap(solicitud_id):
     respuesta = client.service.ConsultarSolicitud(int(solicitud_id))
     if not respuesta.encontrada:
         raise ValueError(respuesta.error or "Solicitud no encontrada en SOAP")
-    # Zeep transforma el tipo complejo XML del WSDL en un objeto Python.
     return {
         "solicitud_id": respuesta.solicitud_id,
         "interesado_email": respuesta.interesado_email,

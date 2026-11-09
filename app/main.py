@@ -15,11 +15,9 @@ app.add_middleware(SessionMiddleware, secret_key=settings.SESSION_SECRET, same_s
 
 @app.on_event("startup")
 def crear_tablas_y_compatibilidad():
-    # Un advisory lock evita que las tres réplicas API intenten crear tablas a la vez.
     with engine.begin() as conn:
         conn.execute(text("SELECT pg_advisory_xact_lock(4815162342)"))
         Base.metadata.create_all(bind=conn)
-        # create_all no modifica tablas existentes; agregar las columnas nuevas de UT5.
         conn.execute(text("ALTER TABLE solicitudes ADD COLUMN IF NOT EXISTS estado_notificacion VARCHAR(20) NOT NULL DEFAULT 'pendiente'"))
         conn.execute(text("ALTER TABLE solicitudes ADD COLUMN IF NOT EXISTS error_notificacion TEXT"))
 
